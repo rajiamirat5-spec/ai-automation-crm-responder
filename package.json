@@ -2,7 +2,7 @@
   "name": "n8n-crm-automation",
   "version": "1.0.0",
   "scripts": {
-    "start": "n8n start"
+    "start": "node --max-old-space-size=400 ./node_modules/n8n/bin/n8n start"
   },
   "dependencies": {
     "n8n": "latest"
