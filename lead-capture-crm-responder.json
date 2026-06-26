@@ -1,0 +1,184 @@
+{
+  "name": "Lead Capture",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lead-capture",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "4dee3a1f-dba4-4ee4-9941-782d4be584ce",
+      "name": "Webhook",
+      "webhookId": "098acd6a-9eb3-48fe-9f1b-47be102aaf6a"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1K3faVxnkEUKx5xrulVH13dEJ265w1q79j_xaqpyIUCI",
+          "mode": "list",
+          "cachedResultName": "Lead Capture",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1K3faVxnkEUKx5xrulVH13dEJ265w1q79j_xaqpyIUCI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1K3faVxnkEUKx5xrulVH13dEJ265w1q79j_xaqpyIUCI/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Timestamp": "={{$now}}",
+            "Full Name": "={{$json.body.full_name}}",
+            "Email": "={{$json.body.email}}",
+            "Phone": "={{$json.body.phone}}",
+            "Message": "={{$json.body.message}}",
+            "Status": "New"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Timestamp",
+              "displayName": "Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Full Name",
+              "displayName": "Full Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Phone",
+              "displayName": "Phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Message",
+              "displayName": "Message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        208,
+        0
+      ],
+      "id": "835c2240-4846-4c37-a975-7a25590131a3",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "3fa4yErTZrajeW7d",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "rajiamirat@gmail.com",
+        "subject": "=Thank you for reaching out! {{ $json['Full Name'] }}",
+        "message": "=Hi {{$('Webhook').item.json.body.full_name}},  Thank you for contacting us. We have received your message and will get back to you shortly.  Best regards, Your Team",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "6a6b591b-060f-4ad2-9710-e7fe4ee80ac2",
+      "name": "Send a message",
+      "webhookId": "14370d44-7e0b-45b4-81c3-f4475237611d",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "GiVQssGkA7cfaOff",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "310db54a-cf15-430a-88a1-bf4b5b02f228",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0a9a9fb61871e2af7e536d1830059bfd78825e63a8403b2f5793c913c9e5467c"
+  },
+  "id": "fRsdJ1QqTg27LOGs",
+  "tags": []
+}
